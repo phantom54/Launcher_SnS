@@ -240,9 +240,9 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     STARTUPINFOW si = { sizeof(si) };
     PROCESS_INFORMATION pi = {};
     if (!CreateProcessW(gamePath, NULL, NULL, NULL, FALSE, 0, NULL, selfDir, &si, &pi)) {
-        char msg[256];
-        wsprintfA(msg, "Failed to start %ls", exeName);
-        MessageBoxA(NULL, msg, "Launcher", MB_OK | MB_ICONERROR);
+        WCHAR msg[256];
+        wsprintfW(msg, L"Failed to start %ls", exeName);
+        MessageBoxW(NULL, msg, L"Launcher", MB_OK | MB_ICONERROR);
         return 1;
     }
 
@@ -261,7 +261,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 
     HANDLE hProc = OpenProcess(PROCESS_VM_READ | PROCESS_VM_WRITE | PROCESS_VM_OPERATION | PROCESS_QUERY_INFORMATION, FALSE, pid);
     if (!hProc) {
-        MessageBoxA(NULL, "Failed to access game process", "Launcher", MB_OK | MB_ICONERROR);
+        MessageBoxW(NULL, L"Failed to access game process", L"Launcher", MB_OK | MB_ICONERROR);
         CloseHandle(pi.hProcess);
         CloseHandle(pi.hThread);
         return 1;
